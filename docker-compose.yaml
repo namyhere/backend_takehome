@@ -1,0 +1,38 @@
+version: "3.8"
+
+services:
+
+ pgdatabase:
+  image: postgres
+  environment:
+   - POSTGRES_USER=postgres
+   - POSTGRES_PASSWORD=backendproject
+   - POSTGRES_DB=exampledb
+  ports:
+   - "5438:5432"
+  volumes:
+   - backend_project:/var/lib/postgresql/data
+  networks:
+   - backend_project_network
+
+ pgadmin:
+  image: dpage/pgadmin4
+  environment:
+   - PGADMIN_DEFAULT_EMAIL=admin@admin.com
+   - PGADMIN_DEFAULT_PASSWORD=root
+  ports:
+   - "8080:80"
+  volumes:
+   - backend_project:/var/lib/postgresql/data
+  depends_on:
+   - pgdatabase
+  networks:
+   - backend_project_network
+
+networks:
+ backend_project_network:
+  external: true #for let anything outside compose can connect with this networks
+
+volumes:
+  backend_project:
+      driver: local
