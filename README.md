@@ -48,11 +48,11 @@ Below are the steps that I've followed inorder to complete this challenge
     ```
 8. After successfully setting up your docker container, we can access (localhost:8080) and setup our databases in postgres using pgAdmin4.
 9. Login to pgAdmin4 website using credentials specified in `docker-compose.yaml` for image dpage/pgadmin4. 
-<img width="743" alt="Screen Shot 2023-06-18 at 6 14 27 PM" src="https://github.com/namyhere/backend_takehome/assets/95732045/f2bcf61d-7fa5-4e27-9fab-47b91a1acf01"><br>
+![ScreenShot](/screenshots/screenshot1.png)<br>
 10. Register a new server with postgres details.
-<img width="743" alt="Screen Shot 2023-06-18 at 6 27 36 PM" src="https://github.com/namyhere/backend_takehome/assets/95732045/b8bc99bb-ffd4-435a-a07b-7d7229b49319"><br>
+![ScreenShot](/screenshots/screenshot2.png)<br>
 11. Specify a new server name and postgres credentials details according to the `docker-compose.yaml` file.
-<img width="723" alt="Screen Shot 2023-06-18 at 6 36 01 PM" src="https://github.com/namyhere/backend_takehome/assets/95732045/f73cea0d-2cd2-4bff-9004-779a410438fa"><br>
+![ScreenShot](/screenshots/screenshot3.png)<br>
 12. Not only for PostgreSQL and PgAdmin4 we also need to build Image for our Docker
     python. In this case we create `dockerfile` :
     ```
