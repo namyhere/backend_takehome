@@ -8,10 +8,10 @@ def transform_data(usersdf, expdf, compoundsdf):
     q1 = q1.rename(columns = {'experiment_id' : 'count'})
     
     #Question 2
-    totalusers = len(usersdf)
+    totalexperiments = len(expdf)
     q2 = pd.merge(usersdf, expdf, on="user_id").groupby(["user_id", "name"])["experiment_id"].count().reset_index()
     q2 = q2.rename(columns = {'experiment_id' : 'average'})
-    q2['average'] = q2['average']/totalusers
+    q2['average'] = q2['average']/totalexperiments
     
     #Question 3
     expdf["experiment_compound_ids"] = expdf["experiment_compound_ids"].str.split(";")
