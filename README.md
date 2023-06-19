@@ -10,14 +10,17 @@ In this challenge, you will be tasked with creating a simple ETL pipeline that c
 ### ETL Process
 Below are the steps that I've followed inorder to complete this challenge
 1. Extract
-Extract stage is used to extract data from data sources. The extract.py file in our case is only reading from various csv files depending on the directory specified and return the dataframe.
+    <br> The Extract stage is used to extract data from data sources. The extract.py file in our case is only reading from various csv files depending on the directory specified and return the dataframe.
 2. Transform
-The Transform stage is where I've performed feature derivation. From the provided CSV files, I need to derive the following features:
+    <br> The Transform stage is where I've performed feature derivation. From the provided CSV files, I need to derive the following features:
     - Total experiments a user ran.
+      <br> users.csv and experiments.csv would be merged on user_id. Then count all experiment_ids by grouping on user_id.
     - Average experiments amount per user.
+      <br> users.csv and experiments.csv would be merged on user_id. Then count all experiment_ids by grouping on user_id. Taking total experiments into picture, every user's average experiment count = count(experiment_id)/total_experiments
     - User's most commonly experimented compound.
+      <br> experiments.csv is first divided on experiment_compound_ids. This would be merged to compounds.csv on compound_id. Then count all compound_ids per user and sort it in decreasing order. Filter down the topmost compound per user. 
 3. Load
-The Load stage is used to load the data that has been transformed to the data warehouse or database. I've used psycopg2 to help me connect python with PostgreSQL. Not just that, I also used argparse to help me create command arguments in python therefore, I can input csv file, database name, host name, username, password, and port of PostgreSQL flexibly.
+    <br> The Load stage is used to load the data that has been transformed to the data warehouse or database. I've used psycopg2 to help me connect python with PostgreSQL. Not just that, I also used argparse to help me create command arguments in python therefore, I can input csv files directory, database name, host name, username, password, and port of PostgreSQL flexibly.
 
 ## Installation
 
@@ -43,11 +46,19 @@ The Load stage is used to load the data that has been transformed to the data wa
     ```
     docker-compose up
     ```
-8. Not only for PostgreSQL and PgAdmin4 we also need to build Image for our Docker python. In this case we create `dockerfile`.
+8. After successfully setting up your docker container, we can access (localhost:8080) and setup our databases in postgres using pgAdmin4.
+9. Login to pgAdmin4 website using credentials specified in `docker-compose.yaml` for image dpage/pgadmin4. 
+<img width="743" alt="Screen Shot 2023-06-18 at 6 14 27 PM" src="https://github.com/namyhere/backend_takehome/assets/95732045/f2bcf61d-7fa5-4e27-9fab-47b91a1acf01"><br>
+10. Register a new server with postgres details.
+<img width="743" alt="Screen Shot 2023-06-18 at 6 27 36 PM" src="https://github.com/namyhere/backend_takehome/assets/95732045/b8bc99bb-ffd4-435a-a07b-7d7229b49319"><br>
+11. Specify a new server name and postgres credentials details according to the `docker-compose.yaml` file.
+<img width="723" alt="Screen Shot 2023-06-18 at 6 36 01 PM" src="https://github.com/namyhere/backend_takehome/assets/95732045/f73cea0d-2cd2-4bff-9004-779a410438fa"><br>
+12. Not only for PostgreSQL and PgAdmin4 we also need to build Image for our Docker
+    python. In this case we create `dockerfile` :
     ```
     docker build -t python-etl .
     ```
-9. After you build the image you can run it with this command:
+13. After you build the image you can run it with this command:
     ```
     docker run -it --network=backend_project_network\
     python-etl\
@@ -58,5 +69,5 @@ The Load stage is used to load the data that has been transformed to the data wa
     -pass backendproject\
     -p 5432
     ```
-10. Then ETL process will completed.
-11. If ETL process runs successfully, you can check the pgAdmin website. Once you open localhost:8080 you get a website below.
+14. Then ETL process will completed.
+15. If ETL runs successfully, there would be 3 tables with all results stored under database specified in `docker-compose.yaml` file.
